@@ -72,8 +72,7 @@ void process_server_response(udp::socket& socket, const udp::endpoint& server_en
 		std::size_t bytes_received = socket.receive_from(boost::asio::buffer(recv_buffer), sender_endpoint, 0, ec);
 		
 		if (ec == boost::asio::error::would_block) {
-			// non-blocking 모드에서 데이터를 수신할 수 없을 때 발생하는 에러를 처리합니다.
-			std::this_thread::sleep_for(std::chrono::milliseconds(100)); // 짧은 지연을 추가하여 CPU를 덜 사용합니다.
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			continue;
 		}
 		
