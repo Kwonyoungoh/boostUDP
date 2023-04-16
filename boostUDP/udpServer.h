@@ -103,12 +103,11 @@ void UdpServer::handle_client_management(std::size_t bytes_recvd) {
 					std::cerr << "Error [DISCONNECT_ACK_FLAG] to " << remote_endpoint_ << " : " << ec.message() << std::endl;
 				}
 				else {
+
 					std::cout << "Successfully sent [DISCONNECT_ACK_FLAG] to " << remote_endpoint_ << std::endl;
 				}
 			});
-
-	}
-	else if (flag == conn_flags::DATA_FLAG) {
+		
 		// JSON 데이터 추출 및 데이터베이스에 저장
 		std::string json_string(recv_buffer_.begin() + 1, recv_buffer_.begin() + bytes_recvd);
 		json received_data = json::parse(json_string);
@@ -120,6 +119,8 @@ void UdpServer::handle_client_management(std::size_t bytes_recvd) {
 
 		std::cout << "Received data: " << json_string << std::endl;
 		update_user_location(steamid, x, y, z);
+	}
+	else if (flag == conn_flags::DATA_FLAG) {
 
 		// 브로드캐스트 메시지를 처리
 		broadcast(recv_buffer_, bytes_recvd, remote_endpoint_);
