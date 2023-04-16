@@ -117,7 +117,8 @@ void UdpServer::handle_client_management(std::size_t bytes_recvd) {
 		float y = received_data["y"].get<float>();
 		float z = received_data["z"].get<float>();
 
-		std::cout << "Received data: " << json_string << std::endl;
+		std::cout << received_data["_steamid"] << "is left."<< std::endl;
+		// 종료시 위치 업데이트
 		update_user_location(steamid, x, y, z);
 	}
 	else if (flag == conn_flags::DATA_FLAG) {
